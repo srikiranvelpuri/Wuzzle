@@ -162,7 +162,7 @@ function App() {
     <div className='App'>
       <div className='header-section'>
         <header className='Title'>WUZZLE</header>
-        {boardData.game_status !== 'IN_PROGRESS' && (
+        {boardData?.game_status !== 'IN_PROGRESS' && (
           <button className='reset-board' onClick={resetBoard}>
             {'\u27f3'}
           </button>
