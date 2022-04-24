@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
+import Instructions from './components/Instructions'
 import './App.scss'
 import { wordList } from './constants/data'
 
@@ -167,6 +168,7 @@ function App() {
             {'\u27f3'}
           </button>
         )}
+        <Instructions />
       </div>
       {message && <div className='message'>{message} </div>}
       <div className='cube'>
