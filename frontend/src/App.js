@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
 import Instructions from './components/Instructions'
-import CssBaseline from '@mui/material/CssBaseline'
-import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import { wordList } from './constants/data'
 import './App.scss'
