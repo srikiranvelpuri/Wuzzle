@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
 import Instructions from './components/Instructions'
-import './App.scss'
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 import { wordList } from './constants/data'
+import './App.scss'
 
 function App() {
   const [boardData, setBoardData] = useState(
@@ -160,44 +163,52 @@ function App() {
   }, [])
 
   return (
-    <div className='App'>
-      <div className='header-section'>
-        <header className='Title'>WUZZLE</header>
-        {boardData?.game_status !== 'IN_PROGRESS' && (
-          <button className='reset-board' onClick={resetBoard}>
-            {'\u27f3'}
-          </button>
-        )}
-        <Instructions />
-      </div>
-      {message && <div className='message'>{message} </div>}
-      <div className='cube'>
-        {[0, 1, 2, 3, 4, 5].map((row, rowIndex) => (
-          <div
-            key={rowIndex}
-            className={`cube-row ${
-              boardData && row === boardData.rowIndex && error && 'error'
-            }`}
-          >
-            {[0, 1, 2, 3, 4].map((column, letterIndex) => (
+    <>
+      <div className='App'>
+        <Container maxWidth='sm'>
+          <div className='header-section'>
+            <header className='Title'>WUZZLE</header>
+            {boardData?.game_status !== 'IN_PROGRESS' && (
+              <button className='reset-board' onClick={resetBoard}>
+                {'\u27f3'}
+              </button>
+            )}
+            <Instructions />
+          </div>
+          {message && <div className='message'>{message} </div>}
+        </Container>
+        <Container maxWidth='lg'>
+          <div className='cube'>
+            {[0, 1, 2, 3, 4, 5].map((row, rowIndex) => (
               <div
-                key={letterIndex}
-                className={`letter ${
-                  boardData && boardData.boardRowStatus[row]
-                    ? boardData.boardRowStatus[row][column]
-                    : ''
+                key={rowIndex}
+                className={`cube-row ${
+                  boardData && row === boardData.rowIndex && error && 'error'
                 }`}
               >
-                {boardData &&
-                  boardData.boardWords[row] &&
-                  boardData.boardWords[row][column]}
+                {[0, 1, 2, 3, 4].map((column, letterIndex) => (
+                  <div
+                    key={letterIndex}
+                    className={`letter ${
+                      boardData && boardData.boardRowStatus[row]
+                        ? boardData.boardRowStatus[row][column]
+                        : ''
+                    }`}
+                  >
+                    {boardData &&
+                      boardData.boardWords[row] &&
+                      boardData.boardWords[row][column]}
+                  </div>
+                ))}
               </div>
             ))}
           </div>
-        ))}
+        </Container>
+        <Container maxWidth='lg'>
+          <Keyboard boardData={boardData} handleClick={handleClick} />
+        </Container>
       </div>
-      <Keyboard boardData={boardData} handleClick={handleClick} />
-    </div>
+    </>
   )
 }
 

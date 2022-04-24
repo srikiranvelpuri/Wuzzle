@@ -106,11 +106,7 @@
   color: #fff;
 }
 
-@media screen and (min-device-width: 375px) and (max-device-width: 1023px) {
-  .App {
-    width: 100vh;
-    height: 200vh;
-  }
+@media screen and (min-device-width: 360px) and (max-device-width: 414px) and (min-device-height: 668px) {
   .letter {
     width: 12vh !important;
     height: 12vh !important;
@@ -120,6 +116,22 @@
     height: 5vh !important;
   }
   .Title {
+    font-size: 55px !important;
+  }
+  .info {
     font-size: 50px !important;
+    .css-i4bv87-MuiSvgIcon-root {
+      font-size: 2rem !important;
+    }
+  }
+  //TITLE
+  .css-cuefkz-MuiContainer-root {
+    padding-bottom: 15vh;
+    padding-top: 10vh;
+  }
+  //CUBE-KEYBOARD
+  .css-1oqqzyl-MuiContainer-root {
+    padding-bottom: 15vh;
+    padding-top: 10vh;
   }
 }
