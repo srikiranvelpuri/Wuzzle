@@ -6,6 +6,7 @@
 
 .header-section {
   display: inline-flex;
+  padding-bottom: 30px;
   .Title {
     font-weight: bold;
     font-size: 30px;
@@ -32,6 +33,8 @@
 .message {
   position: absolute;
   top: 10%;
+  top: 7%;
+  right: 43%;
   padding: 10px 20px;
   border-radius: 10px;
   color: #fff;
@@ -43,6 +46,7 @@
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-top: 30px;
   .cube-row {
     display: flex;
     flex-direction: row;
@@ -107,6 +111,11 @@
 }
 
 @media screen and (min-device-width: 360px) and (max-device-width: 414px) and (min-device-height: 668px) {
+  .message {
+    top: 25%;
+    right: -35%;
+    font-size: larger;
+  }
   .letter {
     width: 12vh !important;
     height: 12vh !important;
