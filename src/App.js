@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
 import Instructions from './components/Instructions'
+import Toggle from './components/Toggle'
 import Container from '@mui/material/Container'
 import { wordList } from './constants/data'
 import './App.scss'
+import { Button } from '@mui/material'
+import { light } from '@mui/material/styles/createPalette'
 
 function App() {
   const [boardData, setBoardData] = useState(
@@ -12,6 +15,7 @@ function App() {
   const [charArray, setCharArray] = useState([])
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
+  const [isDark, setDark] = useState(false)
 
   const resetBoard = () => {
     var alphabetIndex = Math.floor(Math.random() * 26)
@@ -162,18 +166,27 @@ function App() {
 
   return (
     <>
-      <div className='App'>
+      <div className='App' data-dark={isDark}>
         <Container maxWidth='sm'>
           <div className='header-section'>
             <header className='Title'>WUZZLE</header>
             {boardData?.game_status !== 'IN_PROGRESS' && (
-              <button className='reset-board' onClick={resetBoard}>
+              <Button
+                className='reset-board'
+                onClick={resetBoard}
+                color='primary'
+              >
                 {'\u27f3'}
-              </button>
+              </Button>
             )}
             <Instructions />
+            <Toggle handleChange={() => setDark(!isDark)} val={isDark} />
           </div>
-          {message && <div className='message'>{message} </div>}
+          {
+            <div className='message' data-hidden={!message}>
+              {message}
+            </div>
+          }
         </Container>
         <Container maxWidth='lg'>
           <div className='cube'>
