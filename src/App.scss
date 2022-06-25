@@ -175,12 +175,50 @@ div[class*='absent'] {
   border-color: #787c7e !important;
 }
 
+@media screen and (max-device-height: 640px) and (max-device-width: 414px) {
+  .App {
+    right: auto;
+    bottom: -108.7vh !important;
+  }
+}
+
+@media screen and (min-device-width: 360px) and (min-device-height: 641px) and (max-device-height: 668px) {
+  .App {
+    right: auto;
+    bottom: -100.5vh !important;
+  }
+}
+
+@media screen and (min-device-height: 668px) and (max-device-height: 741px) and (max-device-width: 414px) {
+  .App {
+    bottom: -114.5vh !important;
+  }
+}
+
+@media screen and (min-device-height: 741px) and (max-device-height: 786px) and (max-device-width: 414px) {
+  .App {
+    bottom: -108vh !important;
+  }
+}
+
+@media screen and (min-device-height: 787px) and (max-device-height: 851px) and (max-device-width: 414px) {
+  .App {
+    bottom: -124.7vh !important;
+  }
+}
+
+@media screen and (min-device-height: 852px) and (max-device-height: 896px) and (max-device-width: 414px) {
+  .App {
+    bottom: -124vh !important;
+  }
+}
+
 @media screen and (min-device-width: 360px) and (max-device-width: 414px) and (min-device-height: 668px) {
   .App {
     top: 0;
     right: auto;
     left: 0;
-    bottom: -130vh;
+    bottom: -129.7vh;
   }
   #keyboard {
     width: 100vh;

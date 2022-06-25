@@ -8,11 +8,8 @@ import Container from '@mui/material/Container'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { wordList } from './constants/data'
 import './App.scss'
-import { Button, useMediaQuery } from '@mui/material'
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
-
   const [boardData, setBoardData] = useState(
     JSON.parse(localStorage.getItem('board_data'))
   )
@@ -156,9 +153,15 @@ function App() {
     enterCurrText(charArray.join('').toLowerCase())
   }
 
+  const handleKeyPress = (e) => {
+    const key = String(e?.key)
+    handleClick(key)
+  }
+
   useEffect(() => {
-    setDark(prefersDarkMode)
-  }, [prefersDarkMode])
+    window.addEventListener('keyup', handleKeyPress)
+    return () => window.removeEventListener('keyup', handleKeyPress)
+  }, [handleKeyPress])
 
   useEffect(() => {
     if (!boardData || !boardData.solution) {
