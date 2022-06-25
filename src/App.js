@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
+import Confetti from './components/Confetti'
+import TryAgain from './components/TryAgain'
 import Instructions from './components/Instructions'
 import Toggle from './components/Toggle'
 import Container from '@mui/material/Container'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { wordList } from './constants/data'
 import './App.scss'
-import { Button } from '@mui/material'
-import { light } from '@mui/material/styles/createPalette'
+import { Button, useMediaQuery } from '@mui/material'
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+
   const [boardData, setBoardData] = useState(
     JSON.parse(localStorage.getItem('board_data'))
   )
@@ -16,6 +20,18 @@ function App() {
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
   const [isDark, setDark] = useState(false)
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  })
+
+  const lightTheme = createTheme({
+    palette: {
+      mode: 'light',
+    },
+  })
 
   const resetBoard = () => {
     var alphabetIndex = Math.floor(Math.random() * 26)
@@ -86,10 +102,8 @@ function App() {
     }
     if (matchCount === 5) {
       game_status = 'WON'
-      handleMessage('You Win')
     } else if (rowIndex + 1 === 6) {
       game_status = 'LOST'
-      handleMessage('Hard luck try agian')
     }
     boardRowStatus.push(rowStatus)
     boardWords[rowIndex] = word
@@ -143,6 +157,10 @@ function App() {
   }
 
   useEffect(() => {
+    setDark(prefersDarkMode)
+  }, [prefersDarkMode])
+
+  useEffect(() => {
     if (!boardData || !boardData.solution) {
       var alphabetIndex = Math.floor(Math.random() * 26)
       var wordIndex = Math.floor(
@@ -165,21 +183,23 @@ function App() {
   }, [])
 
   return (
-    <>
-      <div className='App' data-dark={isDark}>
+    <div className='App' data-dark={isDark}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <Container maxWidth='sm'>
           <div className='header-section'>
             <header className='Title'>WUZZLE</header>
             {boardData?.game_status !== 'IN_PROGRESS' && (
-              <Button
-                className='reset-board'
-                onClick={resetBoard}
-                color='primary'
-              >
-                {'\u27f3'}
-              </Button>
+              <TryAgain
+                resetBoard={resetBoard}
+                status={boardData?.game_status}
+                word={boardData?.solution}
+                tries={boardData?.boardRowStatus.length}
+              />
             )}
-            <Instructions />
+            {boardData?.game_status === 'IN_PROGRESS' && (
+              <Instructions theme={isDark} />
+            )}
+            {boardData?.game_status === 'WON' && <Confetti />}
             <Toggle handleChange={() => setDark(!isDark)} val={isDark} />
           </div>
           {
@@ -218,8 +238,8 @@ function App() {
         <Container maxWidth='lg'>
           <Keyboard boardData={boardData} handleClick={handleClick} />
         </Container>
-      </div>
-    </>
+      </ThemeProvider>
+    </div>
   )
 }
 

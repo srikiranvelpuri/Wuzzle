@@ -11,18 +11,32 @@
 
 .App[data-dark='true'] {
   background-color: black;
+  background-image: linear-gradient(185deg, #242424 0%, #2c3e50 74%);
+  color: white;
+}
+
+.App[data-dark='false'] {
+  background-image: linear-gradient(254deg, #fbe2fb 0%, #97d9e1 100%);
+}
+
+.App[data-dark='true'] svg {
   color: white;
 }
 
 .App[data-dark='true'] #key {
-  border-color: gray !important;
+  box-shadow: -4px 4px 7px 0px rgb(72 80 89) !important;
 }
 
-.App[data-dark='true'] div[class*='key-'] {
-  border: 2px solid transparent !important;
+.App[data-dark='true'] .letter {
+  box-shadow: -3px 3px 7px 0px rgb(255 255 255 / 25%) !important;
 }
-.App[data-dark='true'] svg {
-  color: white;
+
+.MuiDialog-root[data-dark='true'] .MuiDialog-paper {
+  background-color: #121213 !important;
+  background-image: none !important;
+}
+.MuiDialog-root[data-dark='true'] .MuiDialogContent-root {
+  border-bottom: none !important;
 }
 
 button {
@@ -69,12 +83,11 @@ button {
 .cube {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding-top: 30px;
+  gap: 10px;
   .cube-row {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 7px;
     .letter {
       text-transform: uppercase;
       display: flex;
@@ -85,11 +98,20 @@ button {
       font-weight: 700;
       width: 60px;
       height: 60px;
-      border: 2px solid #d3d6da;
+      box-shadow: -3px 3px 7px 0px rgb(0 0 0 / 40%);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
     }
   }
 }
 
+p,
+h2 {
+  text-transform: uppercase;
+  font-family: system-ui !important;
+}
 .cube-row.error {
   -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
@@ -131,14 +153,26 @@ button {
   color: #fff;
 }
 
+div[class*='correct'] {
+  border-color: #6aaa64 !important;
+}
+
 .present {
   background: #c9b458;
   color: #fff;
 }
 
+div[class*='present'] {
+  border-color: #c9b458 !important;
+}
+
 .absent {
   background: #787c7e;
   color: #fff;
+}
+
+div[class*='absent'] {
+  border-color: #787c7e !important;
 }
 
 @media screen and (min-device-width: 360px) and (max-device-width: 414px) and (min-device-height: 668px) {
@@ -147,6 +181,12 @@ button {
     right: auto;
     left: 0;
     bottom: -130vh;
+  }
+  #keyboard {
+    width: 100vh;
+  }
+  #key {
+    width: 5rem !important;
   }
   .message {
     margin-top: 50px;
@@ -157,10 +197,6 @@ button {
     width: 12vh !important;
     height: 12vh !important;
   }
-  #key {
-    width: 10vh !important;
-    height: 5vh !important;
-  }
   .Title {
     font-size: 55px !important;
   }
@@ -169,13 +205,5 @@ button {
     .css-i4bv87-MuiSvgIcon-root {
       font-size: 2rem !important;
     }
-  }
-  //TITLE
-  .MuiContainer-maxWidthSm {
-    padding-top: 10vh;
-  }
-  //CUBE-KEYBOARD
-  .MuiContainer-maxWidthLg {
-    padding-bottom: 15vh;
   }
 }
