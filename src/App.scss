@@ -11,7 +11,6 @@
 
 .App[data-dark='true'] {
   background-color: black;
-  background-image: linear-gradient(185deg, #242424 0%, #2c3e50 74%);
   color: white;
 }
 
@@ -24,11 +23,16 @@
 }
 
 .App[data-dark='true'] #key {
-  box-shadow: -4px 4px 7px 0px rgb(72 80 89) !important;
+  box-shadow: -5px 6px 9px 0 #485059 !important;
 }
 
 .App[data-dark='true'] .letter {
-  box-shadow: -3px 3px 7px 0px rgb(255 255 255 / 25%) !important;
+  box-shadow: -3px 3px 7px 0px #485059 !important;
+}
+
+.App[data-dark='true'] .message {
+  box-shadow: -10px 4px 32px 0px #485059 !important;
+  color: white;
 }
 
 .MuiDialog-root[data-dark='true'] .MuiDialog-paper {
@@ -71,9 +75,11 @@ button {
   min-height: 20px;
   padding: 10px 20px;
   border-radius: 10px;
-  color: #fff;
-  background: #787c7e;
   font-size: 16px;
+  box-shadow: -10px 4px 32px 0px rgb(92 90 79 / 45%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: black;
 }
 
 .message[data-hidden='true'] {
@@ -178,7 +184,7 @@ div[class*='absent'] {
 @media screen and (max-device-height: 640px) and (max-device-width: 414px) {
   .App {
     right: auto;
-    bottom: -108.7vh !important;
+    bottom: -108.9vh !important;
   }
 }
 

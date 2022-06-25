@@ -59,9 +59,9 @@ function App() {
 
   const handleMessage = (message) => {
     setMessage(message)
-    setTimeout(() => {
-      setMessage(null)
-    }, 3000)
+    // setTimeout(() => {
+    //   setMessage(null)
+    // }, 3000)
   }
 
   const enterBoardData = (word) => {
