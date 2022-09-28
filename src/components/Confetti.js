@@ -53,6 +53,10 @@ const Confetti = (props) => {
       spread: 120,
       startVelocity: 45,
     })
+
+    setTimeout(() => {
+      fire()
+    }, 3000)
   }, [makeShot])
 
   useEffect(() => {

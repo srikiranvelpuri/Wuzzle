@@ -1,22 +1,18 @@
-.MuiContainer-maxWidthLg {
-  display: flex !important;
+#keyboard {
+  display: flex;
   flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  #keyboard {
-    display: flex;
-    flex-direction: column;
-    padding-top: 50px;
-  }
+  width: 100%;
 }
 
 #key-list {
   display: inline-flex;
   justify-content: center;
   padding: 5px;
+  gap: 7px;
+
   #key {
-    padding: 24px;
-    margin: 5px;
+    width: 12vw;
+    height: 5vh;
     display: flex;
     justify-content: center;
     border: 2px solid #d3d6da;
@@ -28,8 +24,9 @@
     -webkit-backdrop-filter: blur(4px);
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
+
     .key-data {
-      font-size: 20px;
+      font-size: 1rem;
       font-weight: bold;
       font-family: monospace;
     }

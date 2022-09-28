@@ -23,6 +23,7 @@ const TryAgain = (props) => {
       actionTitle={'Try Again'}
       action={<RotateRight />}
       defaultOpen
+      disableClose
     />
   )
 }

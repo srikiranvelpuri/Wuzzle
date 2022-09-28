@@ -1,4 +1,4 @@
-export const wordList = {
+const wordList = {
   a: [
     'about',
     'after',
@@ -5804,3 +5804,5 @@ export const wordList = {
     'zooks',
   ],
 }
+
+export default wordList

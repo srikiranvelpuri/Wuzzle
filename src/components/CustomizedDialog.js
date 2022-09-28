@@ -58,6 +58,7 @@ const CustomizedDialog = (props) => {
     action,
     handleActionClick,
     defaultOpen,
+    disableClose,
     showIcon,
     showImage,
     actionTitle,
@@ -83,7 +84,7 @@ const CustomizedDialog = (props) => {
       >
         <BootstrapDialogTitle
           id='customized-dialog-title'
-          onClose={handleClose}
+          onClose={disableClose ? null : handleClose}
         >
           {title}
         </BootstrapDialogTitle>

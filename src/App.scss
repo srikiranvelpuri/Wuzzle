@@ -1,12 +1,19 @@
 .App {
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: grid;
-  place-items: center;
   text-align: center;
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  color: black;
+  justify-content: space-between;
+  bottom: 0;
+  top: 0;
   position: absolute;
+  overflow-y: hidden;
+  overflow-x: hidden;
+
 }
 
 .App[data-dark='true'] {
@@ -23,7 +30,7 @@
 }
 
 .App[data-dark='true'] #key {
-  box-shadow: -5px 6px 9px 0 #485059 !important;
+  box-shadow: -5px 2px 9px 0 #485059 !important;
 }
 
 .App[data-dark='true'] .letter {
@@ -39,6 +46,7 @@
   background-color: #121213 !important;
   background-image: none !important;
 }
+
 .MuiDialog-root[data-dark='true'] .MuiDialogContent-root {
   border-bottom: none !important;
 }
@@ -51,10 +59,12 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
+
   .Title {
     font-weight: bold;
     font-size: 30px;
   }
+
   .reset-board {
     padding: 0px 5px 15px 20px;
     background: none;
@@ -63,6 +73,7 @@ button {
     font-size: 38px;
     cursor: pointer;
   }
+
   .info {
     border: none;
     font-size: 38px;
@@ -72,14 +83,17 @@ button {
 
 .message {
   width: fit-content;
-  min-height: 20px;
-  padding: 10px 20px;
+  display: flex;
+  place-items: center;
+  min-height: 1.875rem;
+  padding: 10px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 1rem;
   box-shadow: -10px 4px 32px 0px rgb(92 90 79 / 45%);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
   color: black;
+
 }
 
 .message[data-hidden='true'] {
@@ -90,20 +104,22 @@ button {
   display: flex;
   flex-direction: column;
   gap: 10px;
+
   .cube-row {
     display: flex;
     flex-direction: row;
     gap: 7px;
+
     .letter {
       text-transform: uppercase;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      font-size: 32px;
+      font-size: 2rem;
       font-weight: 700;
-      width: 60px;
-      height: 60px;
+      width: 12vw;
+      height: 6vh;
       box-shadow: -3px 3px 7px 0px rgb(0 0 0 / 40%);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
@@ -118,6 +134,7 @@ h2 {
   text-transform: uppercase;
   font-family: system-ui !important;
 }
+
 .cube-row.error {
   -webkit-animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
   animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
@@ -128,30 +145,27 @@ h2 {
 }
 
 @keyframes shake {
+
   10%,
   90% {
     transform: translate3d(-1px, 0, 0);
   }
+
   20%,
   80% {
     transform: translate3d(2px, 0, 0);
   }
+
   30%,
   50%,
   70% {
     transform: translate3d(-4px, 0, 0);
   }
+
   40%,
   60% {
     transform: translate3d(4px, 0, 0);
   }
-}
-
-.MuiContainer-maxWidthSm {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
 }
 
 .correct {
@@ -181,73 +195,71 @@ div[class*='absent'] {
   border-color: #787c7e !important;
 }
 
-@media screen and (max-device-height: 640px) and (max-device-width: 414px) {
-  .App {
-    right: auto;
-    bottom: -108.9vh !important;
-  }
+@media (min-width:320px) {
+
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */
+
 }
 
-@media screen and (min-device-width: 360px) and (min-device-height: 641px) and (max-device-height: 668px) {
-  .App {
-    right: auto;
-    bottom: -100.5vh !important;
-  }
+@media (min-width:480px) {
+
+  /* smartphones, Android phones, landscape iPhone */
+
 }
 
-@media screen and (min-device-height: 668px) and (max-device-height: 741px) and (max-device-width: 414px) {
-  .App {
-    bottom: -114.5vh !important;
-  }
-}
+@media (min-width:600px) {
 
-@media screen and (min-device-height: 741px) and (max-device-height: 786px) and (max-device-width: 414px) {
-  .App {
-    bottom: -108vh !important;
-  }
-}
-
-@media screen and (min-device-height: 787px) and (max-device-height: 851px) and (max-device-width: 414px) {
-  .App {
-    bottom: -124.7vh !important;
-  }
-}
-
-@media screen and (min-device-height: 852px) and (max-device-height: 896px) and (max-device-width: 414px) {
-  .App {
-    bottom: -124vh !important;
-  }
-}
-
-@media screen and (min-device-width: 360px) and (max-device-width: 414px) and (min-device-height: 668px) {
-  .App {
-    top: 0;
-    right: auto;
-    left: 0;
-    bottom: -129.7vh;
-  }
-  #keyboard {
-    width: 100vh;
-  }
-  #key {
-    width: 5rem !important;
-  }
-  .message {
-    margin-top: 50px;
-    min-height: 22px;
-    font-size: larger;
-  }
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
   .letter {
-    width: 12vh !important;
-    height: 12vh !important;
+    width: 4vw !important;
+    height: 7vh !important;
   }
-  .Title {
-    font-size: 55px !important;
+
+  #key {
+    width: 4vw !important;
+    height: 7vh !important;
   }
-  .info {
-    font-size: 50px !important;
-    .css-i4bv87-MuiSvgIcon-root {
-      font-size: 2rem !important;
-    }
+
+}
+
+@media (min-width:801px) {
+
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  .letter {
+    width: 4vw;
+    height: 7vh;
+  }
+
+  #key {
+    width: 4vw !important;
+    height: 7vh !important;
+  }
+}
+
+@media (min-width:1025px) {
+
+  /* big landscape tablets, laptops, and desktops */
+  .letter {
+    width: 4vw;
+    height: 7vh;
+  }
+
+  #key {
+    width: 4vw !important;
+    height: 7vh !important;
+  }
+}
+
+@media (min-width:1281px) {
+
+  /* hi-res laptops and desktops */
+  .letter {
+    width: 4vw;
+    height: 7vh;
+  }
+
+  #key {
+    width: 4vw !important;
+    height: 7vh !important;
   }
 }

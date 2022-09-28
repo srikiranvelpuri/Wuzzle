@@ -4,9 +4,8 @@ import Confetti from './components/Confetti'
 import TryAgain from './components/TryAgain'
 import Instructions from './components/Instructions'
 import Toggle from './components/Toggle'
-import Container from '@mui/material/Container'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
-import { wordList } from './constants/data'
+import wordList from './constants/wordList'
 import './App.scss'
 
 function App() {
@@ -16,7 +15,9 @@ function App() {
   const [charArray, setCharArray] = useState([])
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
-  const [isDark, setDark] = useState(false)
+  const [isDark, setDark] = useState(
+    JSON.parse(localStorage.getItem('dark_mode') || false)
+  )
 
   const darkTheme = createTheme({
     palette: {
@@ -133,7 +134,7 @@ function App() {
         let word = charArray.join('').toLowerCase()
         if (!wordList[word.charAt(0)].includes(word)) {
           handleError()
-          handleMessage('Enter a valid 5 letter word')
+          handleMessage('Word not in list')
           return
         }
         enterBoardData(word)
@@ -188,59 +189,59 @@ function App() {
   return (
     <div className='App' data-dark={isDark}>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <Container maxWidth='sm'>
-          <div className='header-section'>
-            <header className='Title'>WUZZLE</header>
-            {boardData?.game_status !== 'IN_PROGRESS' && (
-              <TryAgain
-                resetBoard={resetBoard}
-                status={boardData?.game_status}
-                word={boardData?.solution}
-                tries={boardData?.boardRowStatus.length}
-              />
-            )}
-            {boardData?.game_status === 'IN_PROGRESS' && (
-              <Instructions theme={isDark} />
-            )}
-            {boardData?.game_status === 'WON' && <Confetti />}
-            <Toggle handleChange={() => setDark(!isDark)} val={isDark} />
-          </div>
-          {
-            <div className='message' data-hidden={!message}>
-              {message}
+        <div className='header-section'>
+          <header className='Title'>WUZZLE</header>
+          {boardData?.game_status !== 'IN_PROGRESS' && (
+            <TryAgain
+              resetBoard={resetBoard}
+              status={boardData?.game_status}
+              word={boardData?.solution}
+              tries={boardData?.boardRowStatus.length}
+            />
+          )}
+          {boardData?.game_status === 'IN_PROGRESS' && (
+            <Instructions theme={isDark} />
+          )}
+          {boardData?.game_status === 'WON' && <Confetti />}
+          <Toggle
+            handleChange={() => {
+              setDark(!isDark)
+              localStorage.setItem('dark_mode', !isDark)
+            }}
+            val={isDark}
+          />
+        </div>
+
+        <div className='message' data-hidden={!message}>
+          {message}
+        </div>
+
+        <div className='cube'>
+          {[0, 1, 2, 3, 4, 5].map((row, rowIndex) => (
+            <div
+              key={rowIndex}
+              className={`cube-row ${
+                boardData && row === boardData.rowIndex && error && 'error'
+              }`}
+            >
+              {[0, 1, 2, 3, 4].map((column, letterIndex) => (
+                <div
+                  key={letterIndex}
+                  className={`letter ${
+                    boardData && boardData.boardRowStatus[row]
+                      ? boardData.boardRowStatus[row][column]
+                      : ''
+                  }`}
+                >
+                  {boardData &&
+                    boardData.boardWords[row] &&
+                    boardData.boardWords[row][column]}
+                </div>
+              ))}
             </div>
-          }
-        </Container>
-        <Container maxWidth='lg'>
-          <div className='cube'>
-            {[0, 1, 2, 3, 4, 5].map((row, rowIndex) => (
-              <div
-                key={rowIndex}
-                className={`cube-row ${
-                  boardData && row === boardData.rowIndex && error && 'error'
-                }`}
-              >
-                {[0, 1, 2, 3, 4].map((column, letterIndex) => (
-                  <div
-                    key={letterIndex}
-                    className={`letter ${
-                      boardData && boardData.boardRowStatus[row]
-                        ? boardData.boardRowStatus[row][column]
-                        : ''
-                    }`}
-                  >
-                    {boardData &&
-                      boardData.boardWords[row] &&
-                      boardData.boardWords[row][column]}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-        </Container>
-        <Container maxWidth='lg'>
-          <Keyboard boardData={boardData} handleClick={handleClick} />
-        </Container>
+          ))}
+        </div>
+        <Keyboard boardData={boardData} handleClick={handleClick} />
       </ThemeProvider>
     </div>
   )
