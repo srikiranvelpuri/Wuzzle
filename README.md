@@ -6,6 +6,9 @@ Players select letters of the alphabet on the virtual keyboard and enter them in
 
 If you correctly guess the word within the 6 attempts, then you win the game.
 
-## Additional Features in Wuzzle :
+## Additional features in wuzzle :
 
-Unlike wordle a user can opt to play again if he finishes the game (either by winning or losing) , A reload Icon will be visible after the game finishes clicking on which enables users to play again .
+- 5000+ words
+- Haptic feedback (mobile only)
+- Can play more than 1 game a day
+

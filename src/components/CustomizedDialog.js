@@ -1,23 +1,16 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import Button from '@mui/material/Button'
-import { styled } from '@mui/material/styles'
 import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import DialogContent from '@mui/material/DialogContent'
+import PropTypes from 'prop-types'
 import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from '@mui/icons-material/Close'
-import Typography from '@mui/material/Typography'
-
-const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
-    padding: theme.spacing(2),
-  },
-  '& .MuiDialogActions-root': {
-    padding: theme.spacing(1),
-  },
-}))
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import { Divider } from '@mui/material'
 
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props
@@ -27,7 +20,7 @@ const BootstrapDialogTitle = (props) => {
       {children}
       {onClose ? (
         <IconButton
-          aria-label='close'
+          aria-label="close"
           onClick={onClose}
           sx={{
             position: 'absolute',
@@ -47,25 +40,13 @@ BootstrapDialogTitle.propTypes = {
   children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
 }
-
 const CustomizedDialog = (props) => {
-  const {
-    title,
-    theme,
-    icon,
-    images,
-    content,
-    action,
-    handleActionClick,
-    defaultOpen,
-    disableClose,
-    showIcon,
-    showImage,
-    actionTitle,
-  } = props
-  const [open, setOpen] = React.useState(defaultOpen || false)
+  const { title, icon, content, component, defaultOpen, actionTitle, handleActionClick } = props
+  const [open, setOpen] = useState(defaultOpen || false)
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('xxs'))
 
-  const handleIconClick = () => {
+  const handleClickOpen = () => {
     setOpen(true)
   }
 
@@ -75,48 +56,29 @@ const CustomizedDialog = (props) => {
 
   return (
     <div>
-      {showIcon && <Button onClick={handleIconClick}>{icon}</Button>}
-      <BootstrapDialog
-        data-dark={theme}
-        onClose={handleClose}
-        aria-labelledby='customized-dialog-title'
-        open={open}
-      >
-        <BootstrapDialogTitle
-          id='customized-dialog-title'
-          onClose={disableClose ? null : handleClose}
-        >
+      <Button onClick={handleClickOpen}>{icon}</Button>
+      <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
+        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           {title}
         </BootstrapDialogTitle>
-        <DialogContent dividers>
-          {content?.map((subContent, index) => (
-            <Typography key={index} gutterBottom>
-              {subContent}
-            </Typography>
-          ))}
-          <Typography gutterBottom>
-            {showImage &&
-              images?.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={icon}
-                  style={{ height: 'auto', width: 'auto' }}
-                />
-              ))}
-          </Typography>
+        <Divider />
+        <DialogContent>
+          <DialogContentText>
+            {content?.map((subcontent, key) => (
+              <li key={key}>{subcontent}</li>
+            ))}
+          </DialogContentText>
+          {component}
+          {actionTitle && (
+            <DialogActions>
+              <IconButton size="xs" onClick={handleActionClick}>
+                {actionTitle}
+              </IconButton>
+            </DialogActions>
+          )}
         </DialogContent>
-        {action && (
-          <DialogActions>
-            <Button className='reset-board' onClick={handleActionClick}>
-              {actionTitle}
-              {action}
-            </Button>
-          </DialogActions>
-        )}
-      </BootstrapDialog>
+      </Dialog>
     </div>
   )
 }
-
 export default CustomizedDialog

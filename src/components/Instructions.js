@@ -1,34 +1,54 @@
 import React from 'react'
 import CustomizedDialog from './CustomizedDialog'
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined'
+import { Container, Typography } from '@mui/material'
+import Example from './Example'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
+import { EXAMPLE_ABSENT, EXAMPLE_CORRECT, EXAMPLE_PRESENT } from '../constants/common'
 
 const Instructions = (props) => {
-  const { theme } = props
-  var lightImg = require('../constants/Images/lightMode.png')
-  var darkImg = require('../constants/Images/darkMode.png')
-
-  const images = [theme ? darkImg : lightImg]
   const content = [
-    '- Solve the WUZZLE in six tries,',
-    '- Each guess must be a valid five-letter word,',
-    '- Hit the return button to submit,',
-    '- After each guess, the color of the tiles will change to show how close your guess was to the word.',
+    'Solve the WUZZLE in six tries,',
+    'Each guess must be a valid five-letter word,',
+    'Hit the return button to submit,',
+    'After each guess, the color of the tiles will change to show how close your guess was to the word.',
     'EXAMPLES :',
   ]
+
+  const ExampleComponent = () => {
+    return (
+      <>
+        <Container maxWidth="xs">
+          <Example word={EXAMPLE_CORRECT} value="correct" index={0} />
+          <Typography variant="caption">
+            <strong>A</strong> is in the word and in the correct spot.
+          </Typography>
+        </Container>
+        <Container maxWidth="xs">
+          <Example word={EXAMPLE_PRESENT} value="present" index={1} />
+          <Typography variant="caption">
+            <strong>P</strong> is in the word but in the wrong spot.
+          </Typography>
+        </Container>
+        <Container maxWidth="xs">
+          <Example word={EXAMPLE_ABSENT} value="absent" index={2} />
+          <Typography variant="caption">
+            <strong>S</strong> is not in the word in any spot.
+          </Typography>
+        </Container>
+      </>
+    )
+  }
 
   const title = 'HOW TO PLAY '
 
   return (
-    <div className='info'>
+    <div className="info">
       <CustomizedDialog
-        theme={theme}
-        showIcon
-        showImage
-        defaultOpen
+        icon={<HelpOutlineIcon />}
         title={title}
-        images={images}
         content={content}
-        icon={<InfoOutlinedIcon />}
+        component={<ExampleComponent />}
+        defaultOpen
       />
     </div>
   )

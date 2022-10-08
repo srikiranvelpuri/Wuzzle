@@ -3,7 +3,9 @@
   "version": "1.1.0",
   "description": "Wuzzle [wordle clone]",
   "keywords": [
-    "react"
+    "react",
+    "wordle",
+    "game"
   ],
   "main": "src/index.js",
   "private": true,

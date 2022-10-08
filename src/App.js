@@ -1,23 +1,20 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Keyboard from './components/Keyboard'
-import Confetti from './components/Confetti'
-import TryAgain from './components/TryAgain'
+import CustomAlert from './components/CustomAlert'
 import Instructions from './components/Instructions'
-import Toggle from './components/Toggle'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import wordList from './constants/wordList'
+import CustomDrawer from './components/CustomDrawer'
+import { VIBRATE_PRESS, VIBRATE_ERROR } from './constants/common'
 import './App.scss'
 
-function App() {
-  const [boardData, setBoardData] = useState(
-    JSON.parse(localStorage.getItem('board_data'))
-  )
+const App = () => {
+  const [boardData, setBoardData] = useState(JSON.parse(localStorage.getItem('board_data')))
   const [charArray, setCharArray] = useState([])
   const [message, setMessage] = useState(null)
   const [error, setError] = useState(false)
-  const [isDark, setDark] = useState(
-    JSON.parse(localStorage.getItem('dark_mode') || false)
-  )
+  const [isDark, setDark] = useState(JSON.parse(localStorage.getItem('dark_mode') || false))
+  const [devMode, setDevMode] = useState(0)
 
   const darkTheme = createTheme({
     palette: {
@@ -33,9 +30,7 @@ function App() {
 
   const resetBoard = () => {
     var alphabetIndex = Math.floor(Math.random() * 26)
-    var wordIndex = Math.floor(
-      Math.random() * wordList[String.fromCharCode(97 + alphabetIndex)].length
-    )
+    var wordIndex = Math.floor(Math.random() * wordList[String.fromCharCode(97 + alphabetIndex)].length)
     let newBoardData = {
       ...boardData,
       solution: wordList[String.fromCharCode(97 + alphabetIndex)][wordIndex],
@@ -49,20 +44,29 @@ function App() {
     }
     setBoardData(newBoardData)
     localStorage.setItem('board_data', JSON.stringify(newBoardData))
+    setDevMode(0)
   }
 
-  const handleError = () => {
+  const revealAnswer = () => {
+    navigator.vibrate(VIBRATE_PRESS)
+    enterBoardData(boardData?.solution)
+  }
+
+  const handleError = (errMsg) => {
+    navigator.vibrate(VIBRATE_ERROR)
+
     setError(true)
+    handleMessage(errMsg)
     setTimeout(() => {
       setError(false)
-    }, 3000)
+    }, 1600)
   }
 
   const handleMessage = (message) => {
     setMessage(message)
     setTimeout(() => {
       setMessage(null)
-    }, 3000)
+    }, 1600)
   }
 
   const enterBoardData = (word) => {
@@ -76,26 +80,26 @@ function App() {
     let solution = boardData.solution
     let rowStatus = []
     let matchCount = 0
+    let unmatched = {}
     for (var i = 0; i < word.length; i++) {
       if (solution.charAt(i) === word.charAt(i)) {
         matchCount++
-        rowStatus.push('correct')
-        if (!correctChar.includes(word.charAt(i)))
-          correctChar.push(word.charAt(i))
-
-        if (presentChar.indexOf(word.charAt(i)) !== -1)
-          presentChar.splice(presentChar.indexOf(word.charAt(i)), 1)
-      } else if (solution.includes(word.charAt(i))) {
-        rowStatus.push('present')
-        if (
-          !presentChar.includes(word.charAt(i)) &&
-          !correctChar.includes(word.charAt(i))
-        )
-          presentChar.push(word.charAt(i))
+        rowStatus[i] = 'correct'
+        correctChar.push(word.charAt(i))
       } else {
-        rowStatus.push('absent')
-        if (!absentChar.includes(word.charAt(i)))
+        unmatched[solution.charAt(i)] = (unmatched[solution.charAt(i)] || 0) + 1
+      }
+    }
+    for (let i = 0; i < word.length; i++) {
+      if (word.charAt(i) !== solution.charAt(i)) {
+        if (unmatched[word.charAt(i)]) {
+          rowStatus[i] = 'present'
+          presentChar.push(word.charAt(i))
+          unmatched[word.charAt(i)]--
+        } else {
+          rowStatus[i] = 'absent'
           absentChar.push(word.charAt(i))
+        }
       }
     }
     if (matchCount === 5) {
@@ -133,14 +137,14 @@ function App() {
       if (charArray.length === 5) {
         let word = charArray.join('').toLowerCase()
         if (!wordList[word.charAt(0)].includes(word)) {
-          handleError()
-          handleMessage('Word not in list')
+          handleError('Not in word list')
           return
         }
+        navigator.vibrate(VIBRATE_PRESS)
         enterBoardData(word)
         setCharArray([])
       } else {
-        handleMessage('Enter a valid 5 letter word')
+        handleError('Not enough letters')
       }
       return
     }
@@ -151,12 +155,16 @@ function App() {
       charArray.push(key)
       setCharArray([...charArray])
     }
+    navigator.vibrate(VIBRATE_PRESS)
     enterCurrText(charArray.join('').toLowerCase())
   }
 
   const handleKeyPress = (e) => {
-    const key = String(e?.key)
-    handleClick(key)
+    const regex = /^[a-zA-Z]{1}$/
+    if (String(e?.key).match(regex) || e?.key === 'Backspace' || e?.key === 'Enter') {
+      const key = String(e?.key)
+      handleClick(key)
+    }
   }
 
   useEffect(() => {
@@ -167,9 +175,7 @@ function App() {
   useEffect(() => {
     if (!boardData || !boardData.solution) {
       var alphabetIndex = Math.floor(Math.random() * 26)
-      var wordIndex = Math.floor(
-        Math.random() * wordList[String.fromCharCode(97 + alphabetIndex)].length
-      )
+      var wordIndex = Math.floor(Math.random() * wordList[String.fromCharCode(97 + alphabetIndex)].length)
       let newBoardData = {
         ...boardData,
         solution: wordList[String.fromCharCode(97 + alphabetIndex)][wordIndex],
@@ -184,58 +190,57 @@ function App() {
       setBoardData(newBoardData)
       localStorage.setItem('board_data', JSON.stringify(newBoardData))
     }
-  }, [])
+  }, [boardData])
+
+  useEffect(() => {
+    if (devMode === 10) {
+      revealAnswer()
+    } else if (devMode > 10 && devMode % 2 === 0) {
+      resetBoard()
+    }
+  }, [devMode])
 
   return (
-    <div className='App' data-dark={isDark}>
+    <div className="App" data-dark={isDark}>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <div className='header-section'>
-          <header className='Title'>WUZZLE</header>
-          {boardData?.game_status !== 'IN_PROGRESS' && (
-            <TryAgain
+        <div className="header-container">
+          <div className="header-section">
+            <header className="title">WUZZLE</header>
+            <div className="message" data-hidden={boardData?.game_status === 'IN_PROGRESS' && !message}>
+              <CustomAlert
+                alert={boardData?.game_status !== 'IN_PROGRESS'}
+                status={boardData?.game_status}
+                word={boardData?.solution}
+                tries={boardData?.boardRowStatus.length}
+                content={{ text: message }}
+              />
+            </div>
+          </div>
+
+          <div className="header-items">
+            <Instructions />
+            <CustomDrawer
+              setDark={setDark}
+              isDark={isDark}
               resetBoard={resetBoard}
-              status={boardData?.game_status}
-              word={boardData?.solution}
-              tries={boardData?.boardRowStatus.length}
+              defaultOpen={boardData?.game_status !== 'IN_PROGRESS'}
             />
-          )}
-          {boardData?.game_status === 'IN_PROGRESS' && (
-            <Instructions theme={isDark} />
-          )}
-          {boardData?.game_status === 'WON' && <Confetti />}
-          <Toggle
-            handleChange={() => {
-              setDark(!isDark)
-              localStorage.setItem('dark_mode', !isDark)
-            }}
-            val={isDark}
-          />
+          </div>
         </div>
 
-        <div className='message' data-hidden={!message}>
-          {message}
-        </div>
-
-        <div className='cube'>
+        <div className="cube" onClick={() => setDevMode(devMode + 1)}>
           {[0, 1, 2, 3, 4, 5].map((row, rowIndex) => (
-            <div
-              key={rowIndex}
-              className={`cube-row ${
-                boardData && row === boardData.rowIndex && error && 'error'
-              }`}
-            >
+            <div key={rowIndex} className={`cube-row ${boardData && row === boardData.rowIndex && error && 'error'}`}>
               {[0, 1, 2, 3, 4].map((column, letterIndex) => (
                 <div
                   key={letterIndex}
                   className={`letter ${
-                    boardData && boardData.boardRowStatus[row]
-                      ? boardData.boardRowStatus[row][column]
-                      : ''
-                  }`}
+                    boardData && boardData.boardRowStatus[row] ? boardData.boardRowStatus[row][column] : ''
+                  }  ${boardData && boardData.boardWords[row] && boardData.boardWords[row][column] ? 'pop' : ''}`}
                 >
-                  {boardData &&
-                    boardData.boardWords[row] &&
-                    boardData.boardWords[row][column]}
+                  <p className={`inner-text`}>
+                    {boardData && boardData.boardWords[row] && boardData.boardWords[row][column]}
+                  </p>
                 </div>
               ))}
             </div>
