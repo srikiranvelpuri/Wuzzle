@@ -5,7 +5,12 @@ import Example from './Example'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import { EXAMPLE_ABSENT, EXAMPLE_CORRECT, EXAMPLE_PRESENT } from '../constants/common'
 
-const Instructions = (props) => {
+const Instructions = () => {
+  const showInfo = JSON.parse(localStorage.getItem('showInfo')) || false
+  React.useEffect(() => {
+    localStorage.setItem('showInfo', true)
+  }, [])
+
   const content = [
     'Solve the WUZZLE in six tries,',
     'Each guess must be a valid five-letter word,',
@@ -48,7 +53,7 @@ const Instructions = (props) => {
         title={title}
         content={content}
         component={<ExampleComponent />}
-        defaultOpen
+        defaultOpen={!showInfo}
       />
     </div>
   )
