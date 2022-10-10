@@ -193,7 +193,7 @@ const App = () => {
   }, [boardData])
 
   useEffect(() => {
-    if (devMode === 10) {
+    if (devMode === 10 && boardData?.game_status === 'IN_PROGRESS') {
       revealAnswer()
     } else if (devMode > 10 && devMode % 2 === 0) {
       resetBoard()
