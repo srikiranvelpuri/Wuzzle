@@ -68,7 +68,7 @@ const CustomDrawer = (props) => {
           </ListItem>
         ))}
         <Divider />
-        <IconButton onClick={() => (window.location.href = 'https://github.com/srikiran1707')}>
+        <IconButton onClick={() => window.open('https://github.com/srikiran1707', '_blank')}>
           <GitHubIcon />
           <span style={{ fontSize: '.75rem', paddingLeft: '5px' }}>
             Developed by <strong>Srikiran Velpuri</strong>
