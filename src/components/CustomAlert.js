@@ -1,7 +1,6 @@
 import React from 'react'
 import Confetti from './Confetti'
 import MuiAlert from '@mui/material/Alert'
-import { AlertTitle } from '@mui/material'
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents'
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied'
 

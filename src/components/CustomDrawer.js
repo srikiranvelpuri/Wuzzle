@@ -8,7 +8,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toggle from './Toggle'
-import { Divider, IconButton, Typography } from '@mui/material'
+import { Divider, IconButton} from '@mui/material'
 
 const CustomDrawer = (props) => {
   const { resetBoard, setDark, isDark, defaultOpen } = props

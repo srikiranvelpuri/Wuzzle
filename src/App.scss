@@ -29,7 +29,11 @@
   color: white;
 }
 
-.App[data-dark='true'] #key {
+.App[data-dark='true'] div[id*='-key'] {
+  box-shadow: -5px 2px 9px 0 #485059 !important;
+}
+
+.App[data-dark='true'] button[id=enter-key],button[id=delete-key]  {
   box-shadow: -5px 2px 9px 0 #485059 !important;
 }
 
