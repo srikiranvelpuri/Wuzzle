@@ -9,6 +9,6 @@ If you correctly guess the word within the 6 attempts, then you win the game.
 ## Additional features in wuzzle :
 
 - 5000+ words
-- Haptic feedback (mobile only)
+- Haptic feedback (Android only)
 - Can play more than 1 game a day
-
+- Progressive web app (offline, installable)
