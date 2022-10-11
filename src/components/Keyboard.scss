@@ -10,7 +10,8 @@
   padding: 5px;
   gap: 7px;
 
-  #key {
+  div,
+  button[id*='-key'] {
     width: 12vw;
     height: 5vh;
     display: flex;

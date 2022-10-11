@@ -56,7 +56,9 @@ const CustomizedDialog = (props) => {
 
   return (
     <div>
-      <Button onClick={handleClickOpen}>{icon}</Button>
+      <IconButton aria-label={title} onClick={handleClickOpen}>
+        {icon}
+      </IconButton>
       <Dialog fullScreen={fullScreen} open={open} onClose={handleClose} aria-labelledby="responsive-dialog-title">
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           {title}

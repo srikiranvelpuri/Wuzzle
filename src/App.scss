@@ -53,12 +53,15 @@
 
 button {
   background-color: transparent !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 .header-container {
   display: flex;
   position: relative;
   width: 100%;
+  z-index: 999;
 }
 
 .header-items {
@@ -101,7 +104,7 @@ button {
   color: black;
   position: absolute;
   z-index: 10;
-  top: 5vh;
+  top: 6vh;
   white-space: nowrap;
 }
 
@@ -197,6 +200,8 @@ h2 {
   transform: rotateY(-0.5turn);
   background: #6aaa64;
   color: #fff;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 
   .inner-text {
     display: inline-block;
@@ -214,6 +219,8 @@ div[class*='correct'] {
   transform: rotateY(-0.5turn);
   background: #c9b458;
   color: #fff;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 
   .inner-text {
     display: inline-block;
@@ -231,6 +238,8 @@ div[class*='present'] {
   transform: rotateY(-0.5turn);
   background: #787c7e;
   color: #fff;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 
   .inner-text {
     display: inline-block;
@@ -264,7 +273,7 @@ div[class*='absent'] {
     height: 6vh !important;
   }
 
-  #key {
+  div[id*='-key'] {
     width: 7vw !important;
     height: 7vh !important;
   }
@@ -279,7 +288,7 @@ div[class*='absent'] {
     height: 7vh;
   }
 
-  #key {
+  div[id*='-key'] {
     width: 7vw !important;
     height: 7vh !important;
   }
@@ -293,7 +302,7 @@ div[class*='absent'] {
     height: 7vh;
   }
 
-  #key {
+  div[id*='-key'] {
     width: 4vw !important;
     height: 7vh !important;
   }
@@ -307,7 +316,7 @@ div[class*='absent'] {
     height: 7vh;
   }
 
-  #key {
+  div[id*='-key'] {
     width: 4vw !important;
     height: 7vh !important;
   }

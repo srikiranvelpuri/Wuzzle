@@ -5,7 +5,7 @@ import Instructions from './components/Instructions'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import wordList from './constants/wordList'
 import CustomDrawer from './components/CustomDrawer'
-import { VIBRATE_PRESS, VIBRATE_ERROR } from './constants/common'
+import { vibrateOnPress } from './utils/common'
 import './App.scss'
 
 const App = () => {
@@ -48,12 +48,12 @@ const App = () => {
   }
 
   const revealAnswer = () => {
-    navigator.vibrate(VIBRATE_PRESS)
+    vibrateOnPress()
     enterBoardData(boardData?.solution)
   }
 
   const handleError = (errMsg) => {
-    navigator.vibrate(VIBRATE_ERROR)
+    vibrateOnPress(true)
 
     setError(true)
     handleMessage(errMsg)
@@ -140,7 +140,7 @@ const App = () => {
           handleError('Not in word list')
           return
         }
-        navigator.vibrate(VIBRATE_PRESS)
+        vibrateOnPress()
         enterBoardData(word)
         setCharArray([])
       } else {
@@ -155,7 +155,7 @@ const App = () => {
       charArray.push(key)
       setCharArray([...charArray])
     }
-    navigator.vibrate(VIBRATE_PRESS)
+    vibrateOnPress()
     enterCurrText(charArray.join('').toLowerCase())
   }
 

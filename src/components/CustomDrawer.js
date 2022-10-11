@@ -1,7 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import SwipeableDrawer from '@mui/material/SwipeableDrawer'
-import Button from '@mui/material/Button'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -45,9 +44,9 @@ const CustomDrawer = (props) => {
     Reset: {
       cond: defaultOpen,
       component: () => (
-        <Button onClick={resetBoard}>
+        <IconButton onClick={resetBoard}>
           <RestartAltIcon />
-        </Button>
+        </IconButton>
       ),
     },
   }
@@ -79,9 +78,9 @@ const CustomDrawer = (props) => {
   )
   return (
     <div>
-      <Button onClick={toggleDrawer(true)}>
+      <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
         <MenuIcon />
-      </Button>
+      </IconButton>
       <SwipeableDrawer anchor={drawPos} open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
         {list()}
       </SwipeableDrawer>

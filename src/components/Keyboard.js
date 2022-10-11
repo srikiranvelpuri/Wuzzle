@@ -2,6 +2,7 @@ import React from 'react'
 import BackspaceIcon from '@mui/icons-material/Backspace'
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn'
 import { start_row, end_row } from '../constants/keys'
+import { IconButton } from '@mui/material'
 import './Keyboard.scss'
 
 const Keyboard = (props) => {
@@ -9,26 +10,24 @@ const Keyboard = (props) => {
   const FirstKeyList = (props) => {
     const { startList } = props
     return (
-      <div id='key-list'>
+      <div id="key-list">
         {startList?.map((item, index) => {
           return (
             <div
-              id='key'
+              id={`${index}-key`}
               key={`${index}:${item}`}
               className={`${
                 boardData && boardData.correctChar.includes(item.toLowerCase())
                   ? 'key-correct'
-                  : boardData &&
-                    boardData.presentChar.includes(item.toLowerCase())
+                  : boardData && boardData.presentChar.includes(item.toLowerCase())
                   ? 'key-present'
-                  : boardData &&
-                    boardData.absentChar.includes(item.toLowerCase())
+                  : boardData && boardData.absentChar.includes(item.toLowerCase())
                   ? 'key-absent'
                   : ''
               }`}
               onClick={() => handleClick(item)}
             >
-              <span className='key-data'>{item}</span>
+              <span className="key-data">{item}</span>
             </div>
           )
         })}
@@ -39,41 +38,39 @@ const Keyboard = (props) => {
   const LastKeyList = (props) => {
     const { endList } = props
     return (
-      <div id='key-list'>
-        <button id='key' onClick={() => handleClick('Backspace')}>
+      <div id="key-list">
+        <IconButton id="delete-key" aria-label="delete" onClick={() => handleClick('Backspace')}>
           <BackspaceIcon />
-        </button>
+        </IconButton>
         {endList?.map((item, index) => {
           return (
             <div
-              id='key'
+              id={`${index}-key`}
               key={`${index}:${item}`}
               className={`${
                 boardData && boardData.correctChar.includes(item.toLowerCase())
                   ? 'key-correct'
-                  : boardData &&
-                    boardData.presentChar.includes(item.toLowerCase())
+                  : boardData && boardData.presentChar.includes(item.toLowerCase())
                   ? 'key-present'
-                  : boardData &&
-                    boardData.absentChar.includes(item.toLowerCase())
+                  : boardData && boardData.absentChar.includes(item.toLowerCase())
                   ? 'key-absent'
                   : ''
               }`}
               onClick={() => handleClick(item)}
             >
-              <span className='key-data'>{item}</span>
+              <span className="key-data">{item}</span>
             </div>
           )
         })}
-        <button id='key' onClick={() => handleClick('Enter')}>
+        <IconButton aria-label="enter" id="enter-key" onClick={() => handleClick('Enter')}>
           <KeyboardReturnIcon />
-        </button>
+        </IconButton>
       </div>
     )
   }
 
   return (
-    <div id='keyboard'>
+    <div id="keyboard">
       {start_row.map((item, index) => {
         return <FirstKeyList key={index} startList={item} />
       })}
