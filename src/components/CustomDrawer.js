@@ -8,7 +8,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt'
 import GitHubIcon from '@mui/icons-material/GitHub'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toggle from './Toggle'
-import { Divider, IconButton, ListItemButton } from '@mui/material'
+import { Divider, IconButton} from '@mui/material'
 
 const CustomDrawer = (props) => {
   const { resetBoard, setDark, isDark, defaultOpen } = props
@@ -21,11 +21,7 @@ const CustomDrawer = (props) => {
   }, [defaultOpen])
 
   const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
 
@@ -62,10 +58,7 @@ const CustomDrawer = (props) => {
     }[text])
 
   const list = () => (
-    <Box
-      sx={{ width: drawPos === 'bottom' ? 'auto' : 250 }}
-      role='presentation'
-    >
+    <Box sx={{ width: drawPos === 'bottom' ? 'auto' : 250 }} role="presentation">
       <List>
         {Object.keys(componentMapper).map((text, index) => (
           <ListItem key={index} onClick={toggleDrawer(false)}>
@@ -74,43 +67,21 @@ const CustomDrawer = (props) => {
           </ListItem>
         ))}
         <Divider />
-      </List>
-      <List style={{ position: 'absolute', bottom: 0, width: 250 }}>
-        <p
-          style={{
-            all: 'unset',
-            display: 'revert',
-            textAlign: 'center',
-            fontSize: '0.8rem',
-          }}
-        >
-          v1.2.0
-        </p>
-        <Divider />
-        <ListItemButton
-          onClick={() =>
-            window.open('https://github.com/srikiran1707', '_blank')
-          }
-        >
+        <IconButton onClick={() => window.open('https://github.com/srikiran1707', '_blank')}>
           <GitHubIcon />
           <span style={{ fontSize: '.75rem', paddingLeft: '5px' }}>
             Developed by <strong>Srikiran Velpuri</strong>
           </span>
-        </ListItemButton>
+        </IconButton>
       </List>
     </Box>
   )
   return (
     <div>
-      <IconButton aria-label='menu' onClick={toggleDrawer(true)}>
+      <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
-      <SwipeableDrawer
-        anchor={drawPos}
-        open={state}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
+      <SwipeableDrawer anchor={drawPos} open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
         {list()}
       </SwipeableDrawer>
     </div>
