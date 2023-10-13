@@ -14,18 +14,14 @@ const CustomDrawer = (props) => {
   const { resetBoard, setDark, isDark, defaultOpen } = props
   const [state, setState] = React.useState(defaultOpen || false)
   const isMobile = typeof window.orientation !== 'undefined'
-  const drawPos = isMobile ? 'bottom' : 'right'
+  const drawPos = 'right'
 
   React.useEffect(() => {
     setState(defaultOpen)
   }, [defaultOpen])
 
   const toggleDrawer = (open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
+    if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return
     }
 
@@ -62,10 +58,7 @@ const CustomDrawer = (props) => {
     }[text])
 
   const list = () => (
-    <Box
-      sx={{ width: drawPos === 'bottom' ? 'auto' : 250 }}
-      role='presentation'
-    >
+    <Box sx={{ width: drawPos === 'bottom' ? 'auto' : 250 }} role="presentation">
       <List>
         {Object.keys(componentMapper).map((text, index) => (
           <ListItem key={index} onClick={toggleDrawer(false)}>
@@ -87,11 +80,7 @@ const CustomDrawer = (props) => {
           v1.2.0
         </p>
         <Divider />
-        <ListItemButton
-          onClick={() =>
-            window.open('https://github.com/srikiran1707', '_blank')
-          }
-        >
+        <ListItemButton onClick={() => window.open('https://github.com/srikiran1707', '_blank')}>
           <GitHubIcon />
           <span style={{ fontSize: '.75rem', paddingLeft: '5px' }}>
             Developed by <strong>Srikiran Velpuri</strong>
@@ -102,15 +91,10 @@ const CustomDrawer = (props) => {
   )
   return (
     <div>
-      <IconButton aria-label='menu' onClick={toggleDrawer(true)}>
+      <IconButton aria-label="menu" onClick={toggleDrawer(true)}>
         <MenuIcon />
       </IconButton>
-      <SwipeableDrawer
-        anchor={drawPos}
-        open={state}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
+      <SwipeableDrawer anchor={drawPos} open={state} onClose={toggleDrawer(false)} onOpen={toggleDrawer(true)}>
         {list()}
       </SwipeableDrawer>
     </div>
