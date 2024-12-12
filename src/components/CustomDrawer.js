@@ -80,7 +80,7 @@ const CustomDrawer = (props) => {
           v1.2.0
         </p>
         <Divider />
-        <ListItemButton onClick={() => window.open('https://github.com/srikiran1707', '_blank')}>
+        <ListItemButton onClick={() => window.open('https://github.com/srikiranvelpuri', '_blank')}>
           <GitHubIcon />
           <span style={{ fontSize: '.75rem', paddingLeft: '5px' }}>
             Developed by <strong>Srikiran Velpuri</strong>
