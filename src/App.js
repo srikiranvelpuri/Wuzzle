@@ -5,7 +5,7 @@ import Instructions from './components/Instructions'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import wordList from './constants/wordList'
 import CustomDrawer from './components/CustomDrawer'
-import { vibrateOnPress } from './utils/common'
+import { initializeClarity, vibrateOnPress } from './utils/common'
 import './App.scss'
 
 const App = () => {
@@ -166,6 +166,10 @@ const App = () => {
       handleClick(key)
     }
   }
+
+  useEffect(() => {
+    initializeClarity()
+  }, [])
 
   useEffect(() => {
     window.addEventListener('keyup', handleKeyPress)
